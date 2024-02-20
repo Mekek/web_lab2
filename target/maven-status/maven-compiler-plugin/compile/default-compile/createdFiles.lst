@@ -1,0 +1,8 @@
+utils\ErrorUtil.class
+results\ResultsList$Result.class
+results\ResultsList.class
+servlets\ControllerServlet.class
+utils\AreaChecker.class
+utils\ErrorUtil$1.class
+utils\CoordinatesValidator.class
+servlets\AreaCheckServlet.class
