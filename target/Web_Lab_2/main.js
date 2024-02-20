@@ -65,9 +65,9 @@ const mainForm = document.querySelector('input[id="submit-button"]');
 mainForm.addEventListener('click', function (e) {
     e.preventDefault();
 
-    const xElement = document.querySelector('input[name="x"]:checked');
-    const yElement = document.querySelector('#y');
-    const rElement = document.querySelector('input[name="r"]:checked');
+    const xElement = document.querySelector('#x');
+    const yElement = document.querySelector('input[name="y"]:checked');
+    const rElement = document.querySelector('#r');
 
     if (xElement && yElement && rElement) {
         const xVal = parseFloat(xElement.value.substring(0, 12));
@@ -137,8 +137,7 @@ canvas.addEventListener("click", function (event) {
     }
 });
 
-
-const rElement = document.querySelector('input[name="r"]:checked');
+const rElement = document.querySelector('#r');
 rElement.addEventListener('input', function () {
     r = parseFloat(rElement.value);
     if (isNaN(r)) {
