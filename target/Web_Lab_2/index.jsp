@@ -25,7 +25,7 @@
     <div id="header" class="main-container margin">
         <p>Web-programming. Laboratory work #2</p>
         <p>Kadilov Mikhail Vladimirovich P3231</p>
-        <p>Variant #18273</p>
+        <p>Variant #18373</p>
     </div>
 
     <main class="margin">
