@@ -127,7 +127,7 @@ function drawShapesByR(r) {
         let thirdTrianglePointInAxes = {x: 0, y: -r};
         drawTriangle(ctx, startPointInAxes, secondTrianglePointInAxes, thirdTrianglePointInAxes);
 
-        // рисуем часть 1/4 круга в 3 четверти
+        // рисуем часть 1/4 круга в 4 четверти
         let calculatedRadius = scaleXAxesCoordinate(r);
 
         ctx.beginPath();
