@@ -112,7 +112,7 @@ function drawShapesByR(r) {
 
         // рисуем прямоугольник во 2 четверти
 
-        let endPointInAxes = {x: -(r/2), y: r};
+        let endPointInAxes = {x: -r, y: (r/2)};
         let endScaledPointInAxes = {
             x: scaleXAxesCoordinate(endPointInAxes.x),
             y: scaleYAxesCoordinate(endPointInAxes.y)
@@ -122,13 +122,13 @@ function drawShapesByR(r) {
         ctx.beginPath();
         ctx.fillRect(startPointInCanvas.x, startPointInCanvas.y, endScaledPointInAxes.x, -endScaledPointInAxes.y);
 
-        // рисуем треугольник в 1 четверти
-        let secondTrianglePointInAxes = {x: r, y: 0};
-        let thirdTrianglePointInAxes = {x: 0, y: r};
+        // рисуем треугольник в 3 четверти
+        let secondTrianglePointInAxes = {x: -r, y: 0};
+        let thirdTrianglePointInAxes = {x: 0, y: -r};
         drawTriangle(ctx, startPointInAxes, secondTrianglePointInAxes, thirdTrianglePointInAxes);
 
         // рисуем часть 1/4 круга в 3 четверти
-        let calculatedRadius = scaleXAxesCoordinate(r / 2);
+        let calculatedRadius = scaleXAxesCoordinate(r);
 
         ctx.beginPath();
         ctx.arc(startPointInCanvas.x, startPointInCanvas.y, calculatedRadius, Math.PI / 2, 0, true);

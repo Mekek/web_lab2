@@ -65,14 +65,14 @@ const mainForm = document.querySelector('input[id="submit-button"]');
 mainForm.addEventListener('click', function (e) {
     e.preventDefault();
 
-    const xElement = document.querySelector('#x');
-    const yElement = document.querySelector('input[name="y"]:checked');
-    const rElement = document.querySelector('#r');
+    const xElement = document.querySelector('input[name="x"]:checked');
+    const yElement = document.querySelector('#y');
+    const rElement = document.querySelector('input[name="r"]:checked');
 
     if (xElement && yElement && rElement) {
-        const xVal = parseFloat(xElement.value.substring(0, 12));
-        const yVal = parseFloat(yElement.value);
-        const rVal = parseFloat(rElement.value.substring(0, 12));
+        const xVal = parseFloat(xElement.value);
+        const yVal = parseFloat(yElement.value.substring(0, 12));
+        const rVal = parseFloat(rElement.value);
         console.log(`X: ${xVal}, Y: ${yVal}, R: ${rVal}`);
         send_type = "form";
         if (isPointInsideArea(xVal, yVal, rVal, send_type)) {
@@ -102,7 +102,7 @@ mainForm.addEventListener('click', function (e) {
 const canvas = document.getElementById("graph");
 
 canvas.addEventListener("click", function (event) {
-    const rElement = document.querySelector('#r');
+    const rElement = document.querySelector('input[name="r"]:checked');
     if (!rElement || !rElement.value || isNaN(parseFloat(rElement.value))) {
         showToast("You need to enter coordinate R");
         return;
@@ -137,19 +137,24 @@ canvas.addEventListener("click", function (event) {
     }
 });
 
-const rElement = document.querySelector('#r');
-rElement.addEventListener('input', function () {
-    r = parseFloat(rElement.value);
-    if (isNaN(r)) {
-        const ctx = canvas.getContext("2d");
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        draw(5);
-        drawAllPoints();
-    } else if (isRadiusAcceptable(r)) {
-        drawShapesByR(r);
-        drawAllPoints();
-    } else {
-        showToast(message);
+const radioGroup = document.querySelector('.radio-group');
+radioGroup.addEventListener('click', function(event) {
+    const target = event.target;
+
+    if (target.type === 'radio') {
+        const r = parseFloat(target.value);
+
+        if (isNaN(r)) {
+            const ctx = canvas.getContext("2d");
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            draw(5);
+            drawAllPoints();
+        } else if (isRadiusAcceptable(r)) {
+            drawShapesByR(r);
+            drawAllPoints();
+        } else {
+            showToast(message);
+        }
     }
 });
 
