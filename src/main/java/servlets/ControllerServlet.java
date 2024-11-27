@@ -14,9 +14,15 @@ import java.net.URLDecoder;
 @WebServlet("/controller")
 public class ControllerServlet extends HttpServlet {
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            if (getParam(request, "x") != null && getParam(request, "y") != null && getParam(request, "r") != null) {
+            // РџРѕР»СѓС‡Р°РµРј РїР°СЂР°РјРµС‚СЂС‹ РёР· СЃС‚СЂРѕРєРё Р·Р°РїСЂРѕСЃР°
+            String x = request.getParameter("x");
+            String y = request.getParameter("y");
+            String r = request.getParameter("r");
+
+            // РџСЂРѕРІРµСЂСЏРµРј РЅР°Р»РёС‡РёРµ РІСЃРµС… РїР°СЂР°РјРµС‚СЂРѕРІ
+            if (x != null && y != null && r != null) {
                 request.getRequestDispatcher("./check").forward(request, response);
             } else {
                 request.getRequestDispatcher("./index.jsp").forward(request, response);
@@ -25,28 +31,5 @@ public class ControllerServlet extends HttpServlet {
         } catch (ServletException | IOException e) {
             ErrorUtil.sendError(response, 500, "Internal Server Error");
         }
-    }
-
-    public static String getParam(HttpServletRequest request, String parameter) throws IOException {
-        BufferedReader reader = request.getReader();
-        StringBuilder requestBody = new StringBuilder();
-        String line;
-
-        while ((line = reader.readLine()) != null) {
-            requestBody.append(line);
-        }
-
-        String[] params = requestBody.toString().split("&");
-
-        // Поиск нужного параметра в массиве параметров
-        for (String param : params) {
-            String[] keyValue = param.split("=");
-            if (keyValue.length == 2 && keyValue[0].equals(parameter)) {
-                String value = URLDecoder.decode(keyValue[1], "UTF-8").replace(",", ".");
-                return value;
-            }
-        }
-
-        throw new IllegalArgumentException("Parameter not found: " + parameter);
     }
 }

@@ -2,7 +2,7 @@ import inputValidator from "./inputValidator.js";
 
 let message = "";
 let clickedPoints = [];
-let r;
+let r = null;
 let send_type;
 
 window.addEventListener("load", () => {
@@ -31,7 +31,7 @@ async function drawAllPoints() {
     for (const point of clickedPoints) {
         if (isNaN(r)) {
             drawPoint(point.x, point.y, r, false);
-        }else {
+        } else {
             const isInside = await isPointInsideDesiredArea(point.x, point.y, r);
             drawPoint(point.x, point.y, r, isInside);
         }
@@ -39,14 +39,13 @@ async function drawAllPoints() {
 }
 
 function updateTableAndGraph(data) {
-
     let parsedX = parseFloat(data.x);
     let parsedY = parseFloat(data.y);
     let parsedR = parseFloat(data.r);
 
     drawPoint(parsedX, parsedY, parsedR, data.isHit);
 
-    clickedPoints.push({x: parsedX, y: parsedY, r: parsedR, isHit: data.isHit});
+    clickedPoints.push({ x: parsedX, y: parsedY, r: parsedR, isHit: data.isHit });
 
     const table = document.getElementById('result');
     const newRow = table.insertRow(1);
@@ -67,17 +66,23 @@ mainForm.addEventListener('click', function (e) {
 
     const xElement = document.querySelector('input[name="x"]:checked');
     const yElement = document.querySelector('#y');
-    const rElement = document.querySelector('input[name="r"]:checked');
+    const rElement = document.getElementById('hiddenR');
+    
+    if (!rElement.value || isNaN(rElement.value)) {
+        showToast("You need to enter coordinate R");
+        return;
+    }
 
     if (xElement && yElement && rElement) {
         const xVal = parseFloat(xElement.value);
         const yVal = parseFloat(yElement.value.substring(0, 12));
         const rVal = parseFloat(rElement.value);
+
         console.log(`X: ${xVal}, Y: ${yVal}, R: ${rVal}`);
         send_type = "form";
+        
         if (isPointInsideArea(xVal, yVal, rVal, send_type)) {
-            let urlParams =
-                new URLSearchParams({"x": xVal, "y": yVal, "r": rVal, "type": send_type});
+            let urlParams = new URLSearchParams({ "x": xVal, "y": yVal, "r": rVal, "type": send_type });
             fetch("./controller?" + urlParams.toString())
                 .then(response => {
                     if (!response.ok) {
@@ -102,8 +107,7 @@ mainForm.addEventListener('click', function (e) {
 const canvas = document.getElementById("graph");
 
 canvas.addEventListener("click", function (event) {
-    const rElement = document.querySelector('input[name="r"]:checked');
-    if (!rElement || !rElement.value || isNaN(parseFloat(rElement.value))) {
+    if (r === null || isNaN(r)) {
         showToast("You need to enter coordinate R");
         return;
     }
@@ -113,12 +117,11 @@ canvas.addEventListener("click", function (event) {
     let startPointInAxes = canvasCoordinatesToAxes(x, y, canvas);
     let graphX = startPointInAxes.x;
     let graphY = startPointInAxes.y;
-    let R = parseFloat(rElement.value);
+    let R = parseFloat(r);
 
     send_type = "click";
     if (isPointInsideArea(graphX, graphY, R, send_type)) {
-        let urlParams =
-            new URLSearchParams({"x": graphX, "y": graphY, "r": R, "type": send_type});
+        let urlParams = new URLSearchParams({ "x": graphX, "y": graphY, "r": R, "type": send_type });
         fetch("./controller?" + urlParams.toString())
             .then(response => {
                 if (!response.ok) {
@@ -134,27 +137,6 @@ canvas.addEventListener("click", function (event) {
             });
     } else {
         showToast(message);
-    }
-});
-
-const radioGroup = document.querySelector('.radio-group');
-radioGroup.addEventListener('click', function(event) {
-    const target = event.target;
-
-    if (target.type === 'radio') {
-        const r = parseFloat(target.value);
-
-        if (isNaN(r)) {
-            const ctx = canvas.getContext("2d");
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            draw(5);
-            drawAllPoints();
-        } else if (isRadiusAcceptable(r)) {
-            drawShapesByR(r);
-            drawAllPoints();
-        } else {
-            showToast(message);
-        }
     }
 });
 
@@ -193,3 +175,32 @@ function showToast(message) {
         position: "right"
     }).showToast();
 }
+
+const buttonGroup = document.querySelector('.button-group');
+buttonGroup.addEventListener('click', function(event) {
+    const target = event.target;
+
+    // Проверяем, что клик был по кнопке
+    if (target.tagName === 'BUTTON') {
+        r = parseFloat(target.textContent || target.value); // Получаем значение из кнопки
+
+        // Убираем выделение с других кнопок
+        const buttons = document.querySelectorAll('.button-group button');
+        buttons.forEach(button => button.classList.remove('selected'));
+
+        // Добавляем класс selected на выбранную кнопку
+        target.classList.add('selected');
+
+        if (isNaN(r)) {
+            const ctx = canvas.getContext("2d");
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            draw(5); // Отрисовка с R=5
+            drawAllPoints();
+        } else if (isRadiusAcceptable(r)) {
+            drawShapesByR(r);
+            drawAllPoints();
+        } else {
+            showToast(message);
+        }
+    }
+});

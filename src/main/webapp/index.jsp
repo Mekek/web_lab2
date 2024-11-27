@@ -3,7 +3,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
-    <meta name="author" content="Кадилов Михаил Владимирович P3231" />
+    <meta name="author" content="Кадилов Михаил Владимирович P3331" />
     <meta name="description" content="Лабораторная работа №2, Веб-программирование" />
 
     <link rel="stylesheet" href="styles/style.css">
@@ -24,8 +24,8 @@
 <body class="container">
     <div id="header" class="main-container margin">
         <p>Web-programming. Laboratory work #2</p>
-        <p>Kadilov Mikhail Vladimirovich P3231</p>
-        <p>Variant #18273</p>
+        <p>Kadilov Mikhail Vladimirovich P3331</p>
+        <p>Variant #85329</p>
     </div>
 
     <main class="margin">

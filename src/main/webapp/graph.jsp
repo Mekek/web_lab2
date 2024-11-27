@@ -3,7 +3,7 @@
 <jsp:useBean id="results" scope="session" class="results.ResultsList"/>
 <html>
 <body>
-<canvas id="graph" width="450" height="450"></canvas>
+<canvas id="graph" width="470" height="470"></canvas>
 <script type="module" src="main.js"></script>
 <script>
     let clickedPoints = [];

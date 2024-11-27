@@ -10,8 +10,8 @@ export default class inputValidator{
         } else if (!(-3 <= xVal && xVal <= 5) && send_type == "click") {
             this.message = "The X value should be between -3 and 5";
             this.responseCode = 0;
-        } else if (!(-3 <= yVal && yVal <= 5)){
-            this.message = "The Y value should be between -3 and 5";
+        } else if (!(-3 <= yVal && yVal <= 3)){
+            this.message = "The Y value should be between -3 and 3";
             this.responseCode = 0;
         } else if (![1, 1.5, 2, 2.5, 3].includes(rVal) && send_type == "form"){
             this.message = "The R value should be from this array: [1, 1.5, 2, 2.5, 3]";
