@@ -64,46 +64,49 @@ const mainForm = document.querySelector('input[id="submit-button"]');
 mainForm.addEventListener('click', function (e) {
     e.preventDefault();
 
-    const xElement = document.querySelector('input[name="x"]:checked');
+    const xElements = document.querySelectorAll('input[name="x"]:checked'); // Находим все отмеченные чекбоксы
     const yElement = document.querySelector('#y');
     const rElement = document.getElementById('hiddenR');
-    
+
     if (!rElement.value || isNaN(rElement.value)) {
         showToast("You need to enter coordinate R");
         return;
     }
 
-    if (xElement && yElement && rElement) {
-        const xVal = parseFloat(xElement.value);
+    if (xElements.length > 0 && yElement && rElement) {
         const yVal = parseFloat(yElement.value.substring(0, 12));
         const rVal = parseFloat(rElement.value);
 
-        console.log(`X: ${xVal}, Y: ${yVal}, R: ${rVal}`);
-        send_type = "form";
-        
-        if (isPointInsideArea(xVal, yVal, rVal, send_type)) {
-            let urlParams = new URLSearchParams({ "x": xVal, "y": yVal, "r": rVal, "type": send_type });
-            fetch("./controller?" + urlParams.toString())
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`${response.status} ${response.text()}`);
-                    }
-                    return response.json();
-                })
-                .then(function (serverAnswer) {
-                    updateTableAndGraph(serverAnswer);
-                })
-                .catch(error => {
-                    showToast(`ERROR during request processing: ${error.message}`);
-                });
-        } else {
-            showToast(message);
-        }
+        xElements.forEach(xElement => {
+            const xVal = parseFloat(xElement.value);
+
+            console.log(`X: ${xVal}, Y: ${yVal}, R: ${rVal}`);
+            send_type = "form";
+
+            if (isPointInsideArea(xVal, yVal, rVal, send_type)) {
+                let urlParams = new URLSearchParams({ "x": xVal, "y": yVal, "r": rVal, "type": send_type });
+                console.log("Request URL:", "./controller?" + urlParams.toString());
+                fetch("./controller?" + urlParams.toString())
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`${response.status} ${response.text()}`);
+                        }
+                        return response.json();
+                    })
+                    .then(function (serverAnswer) {
+                        updateTableAndGraph(serverAnswer);
+                    })
+                    .catch(error => {
+                        showToast(`ERROR during request processing: ${error.message}`);
+                    });
+            } else {
+                showToast(message);
+            }
+        });
     } else {
         showToast("You need to enter all values in the form");
     }
 });
-
 const canvas = document.getElementById("graph");
 
 canvas.addEventListener("click", function (event) {

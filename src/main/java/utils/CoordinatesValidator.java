@@ -32,7 +32,7 @@ public class CoordinatesValidator {
     private boolean checkR() {
         if (type.equals("form")) {
             List<Integer> validRValues = Arrays.asList(10, 15, 20, 25, 30);
-            return validRValues.contains((int) r * 10) && r * 10 == (int) r * 10;
+            return validRValues.contains((int) (r * 10)) && r * 10 == (int) (r * 10);
         } else return r >= 1 && r <= 3;
     }
 }

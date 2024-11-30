@@ -51,7 +51,7 @@ function draw(r) {
             ctx.moveTo(scalePos.x, scalePos.y - 5);
             ctx.lineTo(scalePos.x, scalePos.y + 5);
             ctx.stroke();
-            ctx.fillText(rescaleXAxesCoordinate(i), scalePos.x - 10, scalePos.y + 20);
+            ctx.fillText(rescaleXAxesCoordinate(i).toFixed(1), scalePos.x - 10, scalePos.y + 20);
         }
 
         for (let j = -canvas.height / 2; j < canvas.height / 2; j += yAxisScale) {
@@ -61,7 +61,7 @@ function draw(r) {
             ctx.lineTo(scalePos.x + 5, scalePos.y);
             ctx.stroke();
             if (j != 0) {
-                ctx.fillText(rescaleYAxesCoordinate(j), scalePos.x - 20, scalePos.y + 5);
+                ctx.fillText(rescaleYAxesCoordinate(j).toFixed(1), scalePos.x - 30, scalePos.y + 5);
             }
         }
     }

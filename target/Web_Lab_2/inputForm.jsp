@@ -8,15 +8,15 @@
             <div class="select-container margin">
                 <label for="x"><b>Select X:</b></label>
                 <div id="x" class="checkbox-group">
-                    <label><input type="checkbox" name="x" value="-3" onclick="limitCheckboxSelection(this)">-3</label>
-                    <label><input type="checkbox" name="x" value="-2" onclick="limitCheckboxSelection(this)">-2</label>
-                    <label><input type="checkbox" name="x" value="-1" onclick="limitCheckboxSelection(this)">-1</label>
-                    <label><input type="checkbox" name="x" value="0" onclick="limitCheckboxSelection(this)">0</label>
-                    <label><input type="checkbox" name="x" value="1" onclick="limitCheckboxSelection(this)">1</label>
-                    <label><input type="checkbox" name="x" value="2" onclick="limitCheckboxSelection(this)">2</label>
-                    <label><input type="checkbox" name="x" value="3" onclick="limitCheckboxSelection(this)">3</label>
-                    <label><input type="checkbox" name="x" value="4" onclick="limitCheckboxSelection(this)">4</label>
-                    <label><input type="checkbox" name="x" value="5" onclick="limitCheckboxSelection(this)">5</label>
+                    <label><input type="checkbox" name="x" value="-3">-3</label>
+                    <label><input type="checkbox" name="x" value="-2">-2</label>
+                    <label><input type="checkbox" name="x" value="-1">-1</label>
+                    <label><input type="checkbox" name="x" value="0">0</label>
+                    <label><input type="checkbox" name="x" value="1">1</label>
+                    <label><input type="checkbox" name="x" value="2">2</label>
+                    <label><input type="checkbox" name="x" value="3">3</label>
+                    <label><input type="checkbox" name="x" value="4">4</label>
+                    <label><input type="checkbox" name="x" value="5">5</label>
                 </div>
             </div>
         
@@ -52,15 +52,15 @@
                 alert('R selected: ' + value); // Уведомление о выбранном значении
             }
     
-            function limitCheckboxSelection(checkbox) {
-                // Убираем выбор с других чекбоксов, если один выбран
-                const checkboxes = document.querySelectorAll('input[name="x"]');
-                checkboxes.forEach(cb => {
-                    if (cb !== checkbox) {
-                        cb.checked = false;
-                    }
-                });
-            }
+            // function limitCheckboxSelection(checkbox) {
+            //     // Убираем выбор с других чекбоксов, если один выбран
+            //     const checkboxes = document.querySelectorAll('input[name="x"]');
+            //     checkboxes.forEach(cb => {
+            //         if (cb !== checkbox) {
+            //             cb.checked = false;
+            //         }
+            //     });
+            // }
         </script>
     </body>
 </html>
